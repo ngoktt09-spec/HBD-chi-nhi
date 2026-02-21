@@ -4,116 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Gửi Chị Nhi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root { --p: #9b59b6; --bg: #f3e5f5; --petal: #ce93d8; }
         
-        /* FIX LỖI CHẬP MÀN & NỀN TÍM */
-        * { box-sizing: border-box; }
+        /* CHỐNG CHẬP MÀN 100% */
         html, body { 
-            margin: 0; padding: 0; width: 100%; height: 100%;
+            margin: 0; padding: 0; width: 100%; height: 100vh;
             background-color: var(--bg) !important;
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden; /* Chặn cuộn trang gây lỗi chập */
-            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
 
-        /* Lớp hoa tím rơi dưới nền */
         .flower-fall { position: fixed; top: -10%; color: var(--p); opacity: 0.15; animation: fall linear infinite; z-index: 1; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        .container { 
-            position: relative; z-index: 10; width: 90%; max-width: 450px; 
-            height: auto; max-height: 100vh;
-        }
+        .container { position: relative; z-index: 10; width: 90%; max-width: 450px; text-align: center; }
 
-        /* Ẩn hiện trang chuyên nghiệp */
-        .page { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease-out forwards; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* QUẢN LÝ TRANG CHẶT CHẼ */
+        .page { display: none; width: 100%; animation: fadeIn 0.8s ease-out forwards; }
+        .page.active { display: flex; flex-direction: column; align-items: center; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* FONT CHỮ TRANG 1 & 2 (NVN Sivellin style) */
-        .fancy-font { 
-            font-family: 'Great Vibes', cursive; /* Font điệu đà tương đương Sivellin */
-            font-size: 2.8rem; color: var(--p); margin: 0; 
-        }
-        .fancy-subtext { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: 1.4rem; color: #6a1b9a; line-height: 1.4;
-        }
+        /* FONT CHỮ TRANG 1 & 2 */
+        .fancy-font { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--p); margin-bottom: 10px; }
+        .fancy-subtext { font-family: 'Dancing Script', cursive; font-size: 1.4rem; color: #6a1b9a; line-height: 1.5; margin-bottom: 20px; }
 
-        /* CON MÈO CÓ VIỀN TAI (THEO ẢNH MỚI) */
-        .stage { height: 260px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-        .cat-motion { animation: catPop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes catPop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-        .cat { 
-            position: relative; width: 100px; height: 85px; background: #ffe0b2; 
-            border-radius: 45px 45px 25px 25px; border: 2.5px solid #5d4037; /* Viền thân mèo */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        /* CON MÈO DÍNH LIỀN TAI - SỬ DỤNG ICON/IMAGE */
+        .cat-box { 
+            width: 150px; height: 150px; margin-bottom: 20px;
+            animation: catPop 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 100px; /* Hiển thị mèo bằng Emoji hoặc Image */
+            position: relative;
         }
-        .cat::before { 
-            content: ''; position: absolute; width: 85px; height: 70px; background: #ffe0b2; 
-            border-radius: 50%; top: -40px; left: 6px; border: 2.5px solid #5d4037; border-bottom: none;
-        }
-        /* VIỀN TAI MÈO */
-        .ear { 
-            position: absolute; width: 0; height: 0; 
-            border-left: 14px solid transparent; border-right: 14px solid transparent; 
-            border-bottom: 22px solid #5d4037; /* Màu viền tai */
-            top: -60px; z-index: -1;
-        }
-        .ear::after {
-            content: ''; position: absolute; left: -11px; top: 3px;
-            border-left: 11px solid transparent; border-right: 11px solid transparent;
-            border-bottom: 18px solid #ffe0b2; /* Màu trong tai */
-        }
-        .ear.l { left: 10px; transform: rotate(-15deg); } 
-        .ear.r { left: 62px; transform: rotate(15deg); }
+        @keyframes catPop { 0% { transform: scale(0.3) translateY(100px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
         
-        .eye { position: absolute; width: 8px; height: 8px; background: #333; border-radius: 50%; top: -12px; }
-        .eye.l { left: 30px; } .eye.r { left: 60px; }
-        .nose { position: absolute; width: 7px; height: 5px; background: #ff8a80; border-radius: 50%; top: 5px; left: 47px; border: 1.5px solid #5d4037; }
-        .arm { position: absolute; width: 28px; height: 18px; background: #ffe0b2; border-radius: 12px; top: 38px; left: -12px; border: 2.2px solid #5d4037; transform: rotate(-15deg); }
-        .bouquet { position: absolute; left: -28px; top: -30px; font-size: 42px; }
+        .bouquet-icon { position: absolute; bottom: 10px; right: 0; font-size: 50px; }
 
-        /* GIẢI MÃ: 5 CÁNH HOA TÍM MỀM */
-        .flower-wrap { width: 200px; height: 200px; margin: 20px auto; position: relative; }
+        /* HOA GIẢI MÃ */
+        .flower-wrap { width: 180px; height: 180px; margin: 20px auto; position: relative; }
         .petal { 
-            position: absolute; width: 62px; height: 95px; background: var(--petal);
-            left: 69px; top: 10px; border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
-            transform-origin: bottom center; opacity: 0; transition: 0.5s ease-out;
-            box-shadow: inset 0 0 12px rgba(255,255,255,0.4); border: 0.5px solid rgba(0,0,0,0.1);
+            position: absolute; width: 55px; height: 85px; background: var(--petal);
+            left: 62px; top: 10px; border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+            transform-origin: bottom center; opacity: 0; transition: 0.5s;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.4);
         }
-        .petal.on { opacity: 0.92; }
+        .petal.on { opacity: 0.9; }
         #s1 { transform: rotate(0deg); } #s2 { transform: rotate(72deg); }
         #s3 { transform: rotate(144deg); } #s4 { transform: rotate(216deg); } #s5 { transform: rotate(288deg); }
-        .flower-center { position: absolute; width: 32px; height: 32px; background: #fff59d; border-radius: 50%; top: 84px; left: 84px; z-index: 5; opacity: 0; transition: 0.8s; box-shadow: 0 0 10px #fdd835; }
+        .flower-center { position: absolute; width: 30px; height: 30px; background: #fff59d; border-radius: 50%; top: 78px; left: 75px; z-index: 5; opacity: 0; transition: 0.8s; }
 
         /* TRANG CUỐI */
         .final-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .straight-text { font-size: 0.95rem; line-height: 1.7; color: #444; text-align: justify; }
-        .still-here { font-weight: 600; font-size: 1.4rem; letter-spacing: 4px; color: var(--p); margin: 20px 0; display: block; text-transform: uppercase; }
+        .still-here { font-weight: 600; font-size: 1.4rem; letter-spacing: 4px; color: var(--p); margin: 20px 0; display: block; }
         
-        input, textarea { width: 100%; border: 1.5px solid #eee; border-radius: 12px; padding: 12px; font-family: 'Montserrat'; outline: none; margin-top: 15px; box-sizing: border-box; }
+        input, textarea { width: 100%; border: 1.5px solid #eee; border-radius: 10px; padding: 12px; font-family: 'Montserrat'; outline: none; margin-top: 15px; box-sizing: border-box; }
         .btn-hb { width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 12px; background: var(--p); color: white; font-weight: 600; opacity: 0.3; pointer-events: none; }
         .btn-hb.ready { opacity: 1; pointer-events: auto; }
-        .btn-go { background: white; border: 2.2px solid var(--p); color: var(--p); padding: 10px 30px; border-radius: 25px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+        .btn-go { background: white; border: 2.2px solid var(--p); color: var(--p); padding: 10px 30px; border-radius: 25px; cursor: pointer; font-weight: 600; }
     </style>
 </head>
 <body>
     <div id="rain"></div>
     <div class="container">
         <div class="page active" id="p1">
-            <div class="stage">
-                <div class="cat-motion">
-                    <div class="cat">
-                        <div class="ear l"></div><div class="ear r"></div>
-                        <div class="eye l"></div><div class="eye r"></div>
-                        <div class="nose"></div>
-                        <div class="arm"><div class="bouquet">💐</div></div>
-                    </div>
-                </div>
+            <div class="cat-box">
+                🐈<div class="bouquet-icon">💐</div>
             </div>
             <h1 class="fancy-font">Tặng chị nè</h1>
             <p class="fancy-subtext">Chị vào được đây là tìm ra rồi đúng hem?<br>Mọi mảnh ghép đều đã tìm thấy vị trí của mình.</p>
@@ -121,10 +79,10 @@
         </div>
 
         <div class="page" id="p2">
-            <h1 class="fancy-font" style="font-size: 2.2rem; margin-bottom: 10px;">Giải mã</h1>
-            <div style="display: flex; gap: 8px; justify-content: center;">
+            <h1 class="fancy-font" style="font-size: 2.5rem;">Giải mã</h1>
+            <div style="display: flex; gap: 8px; justify-content: center; width: 100%;">
                 <input type="text" id="codeInp" placeholder="Mã D...N..." style="width: 140px; margin: 0;">
-                <button class="btn-go" onclick="check()" style="margin: 0; padding: 10px 20px;">Mở</button>
+                <button class="btn-go" onclick="check()" style="padding: 10px 20px;">Mở</button>
             </div>
             <div class="flower-wrap" id="flowerFinal">
                 <div class="petal" id="s1"></div><div class="petal" id="s2"></div>
