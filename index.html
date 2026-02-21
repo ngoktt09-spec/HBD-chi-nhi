@@ -1,183 +1,173 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Gửi Chị Nhi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Pattaya&family=Dancing+Script&display=swap" rel="stylesheet">
-    <style>
-        :root { --p: #9b59b6; --bg: #f3e5f5; --petal: #ce93d8; }
-        body { margin: 0; min-height: 100vh; background: var(--bg); font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        
-        /* Hiệu ứng cánh hoa tím rơi nền */
-        .flower-fall { position: absolute; top: -10%; color: var(--p); opacity: 0.15; animation: fall linear infinite; z-index: 1; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Chị Nhi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Pattaya&family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        :root { --p: #9b59b6; --bg: #f3e5f5; --petal: #ce93d8; }
+        
+        /* Cố định nền tím cho toàn bộ trang */
+        html, body { 
+            margin: 0; padding: 0; min-height: 100vh; 
+            background-color: var(--bg) !important; /* Ép nền tím nhạt */
+            font-family: 'Montserrat', sans-serif; 
+            display: flex; align-items: center; justify-content: center; overflow-x: hidden; 
+        }
 
-        .container { position: relative; z-index: 10; width: 100%; max-width: 550px; padding: 20px; text-align: center; }
-        .page { display: none; animation: fadeIn 0.8s forwards; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Hiệu ứng hoa tím rơi nền */
+        .flower-fall { position: absolute; top: -10%; color: var(--p); opacity: 0.2; animation: fall linear infinite; z-index: 1; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* --- MOTION CON MÈO ĐI RA (DỰA TRÊN VIDEO) --- */
-        .stage { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; }
-        
-        .cat-motion {
-            position: relative;
-            animation: catAppear 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .container { position: relative; z-index: 10; width: 100%; max-width: 500px; padding: 20px; text-align: center; }
+        .page { display: none; animation: fadeIn 0.8s forwards; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes catAppear {
-            0% { transform: scale(0.3) translateY(100px); opacity: 0; }
-            60% { transform: scale(1.1) translateY(-20px); opacity: 1; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
+        /* MOTION CON MÈO NHẢY RA (THEO VIDEO) */
+        .stage { height: 260px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 20px; }
+        .cat-motion { animation: catBounceIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        
+        @keyframes catBounceIn {
+            0% { transform: scale(0.3) translateY(200px); opacity: 0; }
+            60% { transform: scale(1.1) translateY(-30px); opacity: 1; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
 
-        .cat { 
-            position: relative; width: 100px; height: 85px; background: #ffe0b2; 
-            border-radius: 45px 45px 20px 20px;
-            box-shadow: inset -5px -5px 0 rgba(0,0,0,0.05);
-            animation: catBob 2s infinite ease-in-out; /* Nhún nhảy nhẹ */
-        }
-        
-        @keyframes catBob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
+        .cat { 
+            position: relative; width: 100px; height: 80px; background: #ffe0b2; 
+            border-radius: 45px 45px 20px 20px; box-shadow: inset -5px -5px 0 rgba(0,0,0,0.05);
+            border: 2px solid #edc9af;
+        }
+        .cat::before { content: ''; position: absolute; width: 80px; height: 65px; background: #ffe0b2; border-radius: 50%; top: -35px; left: 10px; border: 2px solid #edc9af; border-bottom: none; }
+        .eye { position: absolute; width: 8px; height: 9px; background: #333; border-radius: 50%; top: -10px; z-index: 2; }
+        .eye.l { left: 30px; } .eye.r { left: 62px; }
+        .nose { position: absolute; width: 7px; height: 5px; background: #ffab91; border-radius: 50%; top: 5px; left: 47px; z-index: 2; }
+        .ear { position: absolute; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 22px solid #ffe0b2; top: -52px; }
+        .ear.l { left: 15px; transform: rotate(-10deg); } .ear.r { left: 63px; transform: rotate(10deg); }
+        .arm { position: absolute; width: 25px; height: 18px; background: #ffe0b2; border-radius: 12px; top: 40px; left: -10px; transform: rotate(-15deg); z-index: 3; border: 1.5px solid #edc9af; }
+        .bouquet { position: absolute; left: -25px; top: -30px; font-size: 38px; }
 
-        /* Chi tiết mặt mèo */
-        .cat::before { content: ''; position: absolute; width: 80px; height: 65px; background: #ffe0b2; border-radius: 50%; top: -40px; left: 10px; }
-        .eye { position: absolute; width: 8px; height: 9px; background: #333; border-radius: 50%; top: -15px; z-index: 2; }
-        .eye.l { left: 30px; } .eye.r { left: 62px; }
-        .nose { position: absolute; width: 7px; height: 5px; background: #ffab91; border-radius: 50%; top: 2px; left: 47px; z-index: 2; }
-        .ear { position: absolute; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 20px solid #ffe0b2; top: -55px; }
-        .ear.l { left: 15px; transform: rotate(-10deg); } .ear.r { left: 63px; transform: rotate(10deg); }
-        
-        /* Chân cầm bó hoa tím */
-        .arm { position: absolute; width: 25px; height: 15px; background: #ffe0b2; border-radius: 10px; top: 40px; left: -5px; transform: rotate(-15deg); z-index: 3; }
-        .bouquet { position: absolute; left: -25px; top: -25px; font-size: 35px; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.1)); }
+        /* 5 CÁNH HOA TÍM MỀM MỎNG */
+        .flower-wrap { width: 220px; height: 220px; margin: 30px auto; position: relative; }
+        .petal { 
+            position: absolute; width: 65px; height: 95px; background: var(--petal);
+            left: 77px; top: 15px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: bottom center; opacity: 0; transition: 0.8s ease-out;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.4); 
+        }
+        .petal.on { opacity: 0.9; }
+        #s1 { transform: rotate(0deg); } #s2 { transform: rotate(72deg); }
+        #s3 { transform: rotate(144deg); } #s4 { transform: rotate(216deg); } #s5 { transform: rotate(288deg); }
+        .flower-center { position: absolute; width: 35px; height: 35px; background: #fff176; border-radius: 50%; top: 92px; left: 92px; z-index: 5; opacity: 0; transition: 1s; }
 
-        /* --- 5 CÁNH HOA TÍM MỀM MỎNG --- */
-        .flower-wrap { width: 220px; height: 220px; margin: 40px auto; position: relative; }
-        .petal { 
-            position: absolute; width: 65px; height: 95px; background: var(--petal);
-            left: 77px; top: 15px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            transform-origin: bottom center; opacity: 0; transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.4); border: 0.5px solid rgba(155, 89, 182, 0.1);
-        }
-        .petal.on { opacity: 0.85; }
-        #s1 { transform: rotate(0deg) translateY(-5px); }
-        #s2 { transform: rotate(72deg) translateY(-5px); }
-        #s3 { transform: rotate(144deg) translateY(-5px); }
-        #s4 { transform: rotate(216deg) translateY(-5px); }
-        #s5 { transform: rotate(288deg) translateY(-5px); }
-        .flower-center { position: absolute; width: 35px; height: 35px; background: #fff176; border-radius: 50%; top: 92px; left: 92px; z-index: 5; opacity: 0; transition: 1s; box-shadow: 0 0 15px rgba(253, 216, 53, 0.5); }
-
-        /* TRANG CUỐI */
-        .final-card { background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
-        .straight-text { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.8; color: #444; text-align: justify; margin-bottom: 15px; }
-        .still-here { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.4rem; letter-spacing: 5px; color: var(--p); display: block; margin: 20px 0; text-transform: uppercase; }
-        
-        textarea { width: 100%; border: 1.5px solid #eee; border-radius: 10px; padding: 12px; font-family: 'Montserrat'; resize: none; margin-top: 15px; outline: none; box-sizing: border-box; }
-        .btn-hb { width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 12px; background: var(--p); color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s; opacity: 0.3; pointer-events: none; }
-        .btn-hb.ready { opacity: 1; pointer-events: auto; }
-        .btn-go { background: #fff; border: 1.5px solid var(--p); color: var(--p); padding: 12px 30px; border-radius: 25px; cursor: pointer; margin-top: 20px; font-weight: 600; transition: 0.3s; }
-        .btn-go:hover { background: var(--p); color: #fff; }
-    </style>
+        /* TRANG CUỐI - FONT THẲNG */
+        .final-card { background: #fff; padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .straight-text { font-family: 'Montserrat', sans-serif; font-size: 1rem; line-height: 1.7; color: #444; text-align: justify; margin-bottom: 15px; }
+        .still-here { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.4rem; letter-spacing: 5px; color: var(--p); display: block; margin: 20px 0; text-transform: uppercase; }
+        
+        textarea { width: 100%; border: 1.5px solid #eee; border-radius: 10px; padding: 12px; font-family: 'Montserrat'; resize: none; margin-top: 15px; outline: none; box-sizing: border-box; }
+        .btn-hb { width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 12px; background: var(--p); color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s; opacity: 0.3; pointer-events: none; }
+        .btn-hb.ready { opacity: 1; pointer-events: auto; }
+        .btn-go { background: #fff; border: 1.5px solid var(--p); color: var(--p); padding: 10px 25px; border-radius: 25px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+    </style>
 </head>
 <body>
-    <div id="rain"></div>
-    <div class="container">
-        <div class="page active" id="p1">
-            <div class="stage">
-                <div class="cat-motion">
-                    <div class="cat">
-                        <div class="ear l"></div><div class="ear r"></div>
-                        <div class="eye l"></div><div class="eye r"></div>
-                        <div class="nose"></div>
-                        <div class="arm"><div class="bouquet"></div></div>
-                    </div>
-                </div>
-            </div>
-            <h1 style="font-family: 'Pattaya'; color: var(--p); margin-top: 10px;">Tặng chị nè</h1>
-            <p style="font-family: 'Dancing Script'; font-size: 1.4rem; color: #6a1b9a;">Chị vào được đây là tìm ra rồi đúng hem?<br>Mọi mảnh ghép đều đã tìm thấy vị trí của mình.</p>
-            <button class="btn-go" onclick="go(2)">vậy thì bấm đây nha</button>
-        </div>
+    <div id="rain"></div>
+    <div class="container">
+        <div class="page active" id="p1">
+            <div class="stage">
+                <div class="cat-motion">
+                    <div class="cat">
+                        <div class="ear l"></div><div class="ear r"></div>
+                        <div class="eye l"></div><div class="eye r"></div>
+                        <div class="nose"></div>
+                        <div class="arm"><div class="bouquet">💐</div></div>
+                    </div>
+                </div>
+            </div>
+            <h1 style="font-family: 'Pattaya'; color: var(--p); margin: 0;">Tặng chị nè</h1>
+            <p style="font-family: 'Dancing Script'; font-size: 1.3rem; color: #6a1b9a;">Chị vào được đây là tìm ra rồi đúng hem?<br>Mọi mảnh ghép đều đã tìm thấy vị trí của mình.</p>
+            <button class="btn-go" onclick="go(2)">vậy thì bấm đây nha</button>
+        </div>
 
-        <div class="page" id="p2">
-            <h2 style="font-family: 'Pattaya'; color: var(--p);">Giải mã</h2>
-            <div style="margin-bottom: 25px;">
-                <input type="text" id="codeInp" placeholder="Mã D...N..." style="padding: 10px; border: none; border-bottom: 2px solid var(--p); background: transparent; text-align: center; outline: none; width: 140px; font-weight: 600;">
-                <button class="btn-go" onclick="check()" style="margin: 0 0 0 10px; padding: 8px 20px;">Mở</button>
-            </div>
-            <div class="flower-wrap" id="flowerFinal">
-                <div class="petal" id="s1"></div><div class="petal" id="s2"></div>
-                <div class="petal" id="s3"></div><div class="petal" id="s4"></div>
-                <div class="petal" id="s5"></div>
-                <div class="flower-center" id="fCenter"></div>
-            </div>
-        </div>
+        <div class="page" id="p2">
+            <h2 style="font-family: 'Pattaya'; color: var(--p);">Giải mã</h2>
+            <div>
+                <input type="text" id="codeInp" placeholder="Mã D...N..." style="padding: 10px; border: none; border-bottom: 2px solid var(--p); background: transparent; text-align: center; outline: none; width: 130px; font-weight: 600;">
+                <button class="btn-go" onclick="check()" style="margin-left: 10px; padding: 8px 15px;">Mở</button>
+            </div>
+            <div class="flower-wrap" id="flowerFinal">
+                <div class="petal" id="s1"></div><div class="petal" id="s2"></div>
+                <div class="petal" id="s3"></div><div class="petal" id="s4"></div>
+                <div class="petal" id="s5"></div>
+                <div class="flower-center" id="fCenter"></div>
+            </div>
+        </div>
 
-        <div class="page" id="p3">
-            <div class="final-card">
-                <p class="straight-text">Mừng chị Nhi tuổi mới ha, chị giữ sức khỏe, ăn ngủ đủ, tinh thần thoải mái, tích cực. Và hơn hết là suôn sẻ công việc, từng bước thực hiện những điều chị mong.</p>
-                <div style="font-size: 1.8rem; cursor: pointer; text-align: right; color: var(--p);" onclick="go(4)">➔</div>
-            </div>
-        </div>
+        <div class="page" id="p3">
+            <div class="final-card">
+                <p class="straight-text">Mừng chị Nhi tuổi mới ha, chị giữ sức khỏe, ăn ngủ đủ, tinh thần thoải mái, tích cực. Và hơn hết là suôn sẻ công việc, từng bước thực hiện những điều chị mong.</p>
+                <div style="font-size: 1.5rem; cursor: pointer; text-align: right; color: var(--p);" onclick="go(4)">➔</div>
+            </div>
+        </div>
 
-        <div class="page" id="p4">
-            <div class="final-card">
-                <p class="straight-text">Muốn thì sẽ tìm cách, và đây là cách em quay lại. Em muốn giữ lời là em vẫn nhớ đến chị. Hy vọng chị sẽ vui với trải nghiệm này nhé.</p>
-                <span class="still-here">I'M STILL HERE</span>
-                <form action="https://formspree.io/f/mbdazjyk" method="POST">
-                    <textarea name="cam_nhan" id="comment" rows="3" placeholder="Chị viết cảm nhận ở đây nhé..." oninput="validate()"></textarea>
-                    <button type="submit" class="btn-hb" id="submitBtn">Happy Birthday</button>
-                </form>
-            </div>
-        </div>
-    </div>
+        <div class="page" id="p4">
+            <div class="final-card">
+                <p class="straight-text">Muốn thì sẽ tìm cách, và đây là cách em quay lại. Em muốn giữ lời là em vẫn nhớ đến chị. Hy vọng chị sẽ vui với trải nghiệm này nhé.</p>
+                <span class="still-here">I'M STILL HERE</span>
+                <form action="https://formspree.io/f/mbdazjyk" method="POST">
+                    <textarea name="cam_nhan" id="comment" rows="3" placeholder="Chị viết cảm nhận ở đây nhé..." oninput="validate()"></textarea>
+                    <button type="submit" class="btn-hb" id="submitBtn">Happy Birthday</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        function initFl() {
-            const r = document.getElementById('rain');
-            for (let i = 0; i < 20; i++) {
-                let f = document.createElement('div'); f.className = 'flower-fall'; f.innerHTML = '✿';
-                f.style.left = Math.random() * 100 + 'vw'; f.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                r.appendChild(f);
-            }
-        }
-        initFl();
+    <script>
+        function initFl() {
+            const r = document.getElementById('rain');
+            for (let i = 0; i < 20; i++) {
+                let f = document.createElement('div'); f.className = 'flower-fall'; f.innerHTML = '✿';
+                f.style.left = Math.random() * 100 + 'vw'; f.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                r.appendChild(f);
+            }
+        }
+        initFl();
 
-        function go(p) {
-            document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
-            document.getElementById('p' + p).classList.add('active');
-        }
+        function go(p) {
+            document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
+            document.getElementById('p' + p).classList.add('active');
+        }
 
-        const keys = { "D15N5": "s1", "D9N9": "s2", "D5N15": "s3", "D10N10": "s4", "D7N4": "s5" };
-        let count = 0;
+        const keys = { "D15N5": "s1", "D9N9": "s2", "D5N15": "s3", "D10N10": "s4", "D7N4": "s5" };
+        let count = 0;
 
-        function check() {
-            const i = document.getElementById('codeInp');
-            const v = i.value.toUpperCase().trim();
-            if (keys[v]) {
-                const s = document.getElementById(keys[v]);
-                if (!s.classList.contains('on')) {
-                    s.classList.add('on'); count++; i.value = "";
-                    if (count === 5) {
-                        document.getElementById('fCenter').style.opacity = "1";
-                        setTimeout(() => {
-                            document.getElementById('flowerFinal').style.transform = "scale(1.2) rotate(360deg)";
-                            document.getElementById('flowerFinal').style.transition = "2s";
-                            setTimeout(() => go(3), 2200);
-                        }, 800);
-                    }
-                }
-            }
-        }
+        function check() {
+            const i = document.getElementById('codeInp');
+            const v = i.value.toUpperCase().trim();
+            if (keys[v]) {
+                const s = document.getElementById(keys[v]);
+                if (!s.classList.contains('on')) {
+                    s.classList.add('on'); count++; i.value = "";
+                    if (count === 5) {
+                        document.getElementById('fCenter').style.opacity = "1";
+                        setTimeout(() => {
+                            document.getElementById('flowerFinal').style.transform = "scale(1.1) rotate(360deg)";
+                            document.getElementById('flowerFinal').style.transition = "2s";
+                            setTimeout(() => go(3), 2200);
+                        }, 800);
+                    }
+                }
+            }
+        }
 
-        function validate() {
-            const txt = document.getElementById('comment').value.trim();
-            const btn = document.getElementById('submitBtn');
-            btn.classList.toggle('ready', txt.length > 3);
-        }
-    </script>
+        function validate() {
+            const txt = document.getElementById('comment').value.trim();
+            const btn = document.getElementById('submitBtn');
+            btn.classList.toggle('ready', txt.length > 3);
+        }
+    </script>
 </body>
 </html>
