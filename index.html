@@ -8,69 +8,77 @@
     <style>
         :root { --p: #9b59b6; --bg: #f3e5f5; --petal: #ce93d8; }
         
-        /* Cố định nền tím cho toàn bộ trang */
+        /* FIX LỖI CHẬP MÀN: Đảm bảo nền luôn hiện diện */
         html, body { 
-            margin: 0; padding: 0; min-height: 100vh; 
-            background-color: var(--bg) !important; /* Ép nền tím nhạt */
-            font-family: 'Montserrat', sans-serif; 
-            display: flex; align-items: center; justify-content: center; overflow-x: hidden; 
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
+            background: var(--bg) !important;
+            font-family: 'Montserrat', sans-serif;
+            display: flex; align-items: center; justify-content: center;
+            overflow-x: hidden;
         }
 
-        /* Hiệu ứng hoa tím rơi nền */
-        .flower-fall { position: absolute; top: -10%; color: var(--p); opacity: 0.2; animation: fall linear infinite; z-index: 1; pointer-events: none; }
+        /* Hoa tím rơi nền */
+        .flower-fall { position: fixed; top: -10%; color: var(--p); opacity: 0.15; animation: fall linear infinite; z-index: 1; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        .container { position: relative; z-index: 10; width: 100%; max-width: 500px; padding: 20px; text-align: center; }
-        .page { display: none; animation: fadeIn 0.8s forwards; }
+        .container { position: relative; z-index: 5; width: 90%; max-width: 500px; text-align: center; padding: 20px; }
+        .page { display: none; animation: fadeIn 0.8s ease-in-out forwards; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* MOTION CON MÈO NHẢY RA (THEO VIDEO) */
-        .stage { height: 260px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 20px; }
-        .cat-motion { animation: catBounceIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        /* MOTION CON MÈO NHẢY RA (CHỈNH THEO VIDEO) */
+        .stage { height: 280px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+        .cat-motion { animation: catBounce 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         
-        @keyframes catBounceIn {
-            0% { transform: scale(0.3) translateY(200px); opacity: 0; }
-            60% { transform: scale(1.1) translateY(-30px); opacity: 1; }
+        @keyframes catBounce {
+            0% { transform: scale(0.2) translateY(300px); opacity: 0; }
+            60% { transform: scale(1.1) translateY(-20px); opacity: 1; }
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
 
+        /* Vẽ mèo hoạt hình giống chú chó trong video */
         .cat { 
-            position: relative; width: 100px; height: 80px; background: #ffe0b2; 
-            border-radius: 45px 45px 20px 20px; box-shadow: inset -5px -5px 0 rgba(0,0,0,0.05);
-            border: 2px solid #edc9af;
+            position: relative; width: 110px; height: 90px; background: #ffe0b2; 
+            border-radius: 50px 50px 25px 25px; border: 2.5px solid #5d4037; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .cat::before { content: ''; position: absolute; width: 80px; height: 65px; background: #ffe0b2; border-radius: 50%; top: -35px; left: 10px; border: 2px solid #edc9af; border-bottom: none; }
-        .eye { position: absolute; width: 8px; height: 9px; background: #333; border-radius: 50%; top: -10px; z-index: 2; }
-        .eye.l { left: 30px; } .eye.r { left: 62px; }
-        .nose { position: absolute; width: 7px; height: 5px; background: #ffab91; border-radius: 50%; top: 5px; left: 47px; z-index: 2; }
-        .ear { position: absolute; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 22px solid #ffe0b2; top: -52px; }
-        .ear.l { left: 15px; transform: rotate(-10deg); } .ear.r { left: 63px; transform: rotate(10deg); }
-        .arm { position: absolute; width: 25px; height: 18px; background: #ffe0b2; border-radius: 12px; top: 40px; left: -10px; transform: rotate(-15deg); z-index: 3; border: 1.5px solid #edc9af; }
-        .bouquet { position: absolute; left: -25px; top: -30px; font-size: 38px; }
+        .cat::before { 
+            content: ''; position: absolute; width: 90px; height: 75px; background: #ffe0b2; 
+            border-radius: 50%; top: -45px; left: 10px; border: 2.5px solid #5d4037; border-bottom: none;
+        }
+        .eye { position: absolute; width: 10px; height: 10px; background: #333; border-radius: 50%; top: -15px; }
+        .eye.l { left: 30px; } .eye.r { left: 65px; }
+        .nose { position: absolute; width: 8px; height: 6px; background: #ff8a80; border-radius: 50%; top: 5px; left: 51px; border: 1px solid #5d4037; }
+        .ear { position: absolute; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 25px solid #ffe0b2; top: -65px; z-index: -1; }
+        .ear.l { left: 15px; transform: rotate(-15deg); } .ear.r { left: 65px; transform: rotate(15deg); }
+        .arm { position: absolute; width: 30px; height: 20px; background: #ffe0b2; border-radius: 15px; top: 40px; left: -15px; border: 2px solid #5d4037; transform: rotate(-20deg); }
+        .bouquet { position: absolute; left: -30px; top: -35px; font-size: 45px; }
 
-        /* 5 CÁNH HOA TÍM MỀM MỎNG */
+        /* CÁNH HOA TÍM MỀM MỎNG */
         .flower-wrap { width: 220px; height: 220px; margin: 30px auto; position: relative; }
         .petal { 
-            position: absolute; width: 65px; height: 95px; background: var(--petal);
-            left: 77px; top: 15px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            transform-origin: bottom center; opacity: 0; transition: 0.8s ease-out;
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.4); 
+            position: absolute; width: 65px; height: 100px; background: var(--petal);
+            left: 77px; top: 10px; border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+            transform-origin: bottom center; opacity: 0; transition: 0.6s ease-in-out;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.4); border: 0.5px solid rgba(0,0,0,0.1);
         }
-        .petal.on { opacity: 0.9; }
-        #s1 { transform: rotate(0deg); } #s2 { transform: rotate(72deg); }
-        #s3 { transform: rotate(144deg); } #s4 { transform: rotate(216deg); } #s5 { transform: rotate(288deg); }
-        .flower-center { position: absolute; width: 35px; height: 35px; background: #fff176; border-radius: 50%; top: 92px; left: 92px; z-index: 5; opacity: 0; transition: 1s; }
+        .petal.on { opacity: 0.9; transform: scale(1); }
+        #s1 { transform: rotate(0deg) scale(0.5); } #s2 { transform: rotate(72deg) scale(0.5); }
+        #s3 { transform: rotate(144deg) scale(0.5); } #s4 { transform: rotate(216deg) scale(0.5); } #s5 { transform: rotate(288deg) scale(0.5); }
+        .petal.on#s1 { transform: rotate(0deg) scale(1); } .petal.on#s2 { transform: rotate(72deg) scale(1); }
+        .petal.on#s3 { transform: rotate(144deg) scale(1); } .petal.on#s4 { transform: rotate(216deg) scale(1); } .petal.on#s5 { transform: rotate(288deg) scale(1); }
+        .flower-center { position: absolute; width: 35px; height: 35px; background: #fff176; border-radius: 50%; top: 92px; left: 92px; z-index: 5; opacity: 0; transition: 1s; border: 1px solid #f9a825; }
 
-        /* TRANG CUỐI - FONT THẲNG */
-        .final-card { background: #fff; padding: 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .straight-text { font-family: 'Montserrat', sans-serif; font-size: 1rem; line-height: 1.7; color: #444; text-align: justify; margin-bottom: 15px; }
-        .still-here { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.4rem; letter-spacing: 5px; color: var(--p); display: block; margin: 20px 0; text-transform: uppercase; }
+        /* TRANG CUỐI */
+        .final-card { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
+        .straight-text { font-size: 0.95rem; line-height: 1.8; color: #444; text-align: justify; margin-bottom: 20px; }
+        .still-here { font-weight: 600; font-size: 1.5rem; letter-spacing: 4px; color: var(--p); display: block; margin-bottom: 20px; text-transform: uppercase; }
         
-        textarea { width: 100%; border: 1.5px solid #eee; border-radius: 10px; padding: 12px; font-family: 'Montserrat'; resize: none; margin-top: 15px; outline: none; box-sizing: border-box; }
+        input, textarea { width: 100%; border: 1.5px solid #ddd; border-radius: 12px; padding: 12px; font-family: 'Montserrat'; outline: none; box-sizing: border-box; }
         .btn-hb { width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 12px; background: var(--p); color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s; opacity: 0.3; pointer-events: none; }
-        .btn-hb.ready { opacity: 1; pointer-events: auto; }
-        .btn-go { background: #fff; border: 1.5px solid var(--p); color: var(--p); padding: 10px 25px; border-radius: 25px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+        .btn-hb.ready { opacity: 1; pointer-events: auto; box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4); }
+        .btn-go { background: #fff; border: 2px solid var(--p); color: var(--p); padding: 10px 30px; border-radius: 25px; cursor: pointer; margin-top: 15px; font-weight: 600; transition: 0.3s; }
+        .btn-go:hover { background: var(--p); color: #fff; }
     </style>
 </head>
 <body>
@@ -87,16 +95,16 @@
                     </div>
                 </div>
             </div>
-            <h1 style="font-family: 'Pattaya'; color: var(--p); margin: 0;">Tặng chị nè</h1>
-            <p style="font-family: 'Dancing Script'; font-size: 1.3rem; color: #6a1b9a;">Chị vào được đây là tìm ra rồi đúng hem?<br>Mọi mảnh ghép đều đã tìm thấy vị trí của mình.</p>
+            <h1 style="font-family: 'Pattaya'; color: var(--p); margin: 10px 0;">Tặng chị nè</h1>
+            <p style="font-family: 'Dancing Script'; font-size: 1.4rem; color: #6a1b9a;">Chị vào được đây là tìm ra rồi đúng hem?<br>Mọi mảnh ghép đều đã tìm thấy vị trí của mình.</p>
             <button class="btn-go" onclick="go(2)">vậy thì bấm đây nha</button>
         </div>
 
         <div class="page" id="p2">
             <h2 style="font-family: 'Pattaya'; color: var(--p);">Giải mã</h2>
-            <div>
-                <input type="text" id="codeInp" placeholder="Mã D...N..." style="padding: 10px; border: none; border-bottom: 2px solid var(--p); background: transparent; text-align: center; outline: none; width: 130px; font-weight: 600;">
-                <button class="btn-go" onclick="check()" style="margin-left: 10px; padding: 8px 15px;">Mở</button>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                <input type="text" id="codeInp" placeholder="Mã D...N..." style="width: 140px; text-align: center;">
+                <button class="btn-go" onclick="check()" style="margin: 0; padding: 10px 20px;">Mở</button>
             </div>
             <div class="flower-wrap" id="flowerFinal">
                 <div class="petal" id="s1"></div><div class="petal" id="s2"></div>
@@ -109,7 +117,7 @@
         <div class="page" id="p3">
             <div class="final-card">
                 <p class="straight-text">Mừng chị Nhi tuổi mới ha, chị giữ sức khỏe, ăn ngủ đủ, tinh thần thoải mái, tích cực. Và hơn hết là suôn sẻ công việc, từng bước thực hiện những điều chị mong.</p>
-                <div style="font-size: 1.5rem; cursor: pointer; text-align: right; color: var(--p);" onclick="go(4)">➔</div>
+                <div style="font-size: 2rem; cursor: pointer; text-align: right; color: var(--p);" onclick="go(4)">➔</div>
             </div>
         </div>
 
@@ -118,7 +126,7 @@
                 <p class="straight-text">Muốn thì sẽ tìm cách, và đây là cách em quay lại. Em muốn giữ lời là em vẫn nhớ đến chị. Hy vọng chị sẽ vui với trải nghiệm này nhé.</p>
                 <span class="still-here">I'M STILL HERE</span>
                 <form action="https://formspree.io/f/mbdazjyk" method="POST">
-                    <textarea name="cam_nhan" id="comment" rows="3" placeholder="Chị viết cảm nhận ở đây nhé..." oninput="validate()"></textarea>
+                    <textarea name="cam_nhan" id="comment" rows="3" placeholder="Chị viết cảm nhận ở đây mới bấm được nút nè..." oninput="validate()"></textarea>
                     <button type="submit" class="btn-hb" id="submitBtn">Happy Birthday</button>
                 </form>
             </div>
@@ -139,6 +147,7 @@
         function go(p) {
             document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
             document.getElementById('p' + p).classList.add('active');
+            window.scrollTo(0,0);
         }
 
         const keys = { "D15N5": "s1", "D9N9": "s2", "D5N15": "s3", "D10N10": "s4", "D7N4": "s5" };
@@ -166,7 +175,7 @@
         function validate() {
             const txt = document.getElementById('comment').value.trim();
             const btn = document.getElementById('submitBtn');
-            btn.classList.toggle('ready', txt.length > 3);
+            btn.classList.toggle('ready', txt.length > 5);
         }
     </script>
 </body>
