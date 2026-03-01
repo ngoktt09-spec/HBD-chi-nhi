@@ -100,7 +100,7 @@
             </div>
             <h1 class="fancy-font" style="font-size: 4.0rem;">Tặng chị bông nè</h1>
             <p class="fancy-subtext" style="font-size: 1.8rem;">Mọi mảnh ghép đều đã ở đúng vị trí.<br>Chúc mừng chị!</p>
-            <button class="btn-go" onclick="go(2)" style="font-size: 1.0rem;">Click đây để tiếp nha</button>
+            <button class="btn-go" onclick="startExperience()" style="font-size: 1.0rem;">Click đây để tiếp nha</button>
         </div>
 
         <div class="page" id="p2">
@@ -129,9 +129,9 @@
             </div>
             <div class="game-grid" style="font-size: 3.0rem">
                 <div class="game-item" id="gi1"><label>1. Hình nền web & hoa màu gì?</label><input type="text" oninput="checkGame(1, this)" placeholder="Này dễ nè..."></div>
-                <div class="game-item" id="gi2"><label>2. Tọa độ D...N... liên tưởng đến ngày gì?</label><input type="text" oninput="checkGame(2, this)" placeholder="Còn ngày gì nữa..."></div>
-                <div class="game-item" id="gi3"><label>3. Mỗi lần gặp mặt, em hay để lại gì khi rời đi?</label><input type="text" oninput="checkGame(3, this)" placeholder="Lục tìm kí ức liền..."></div>
-                <div class="game-item" id="gi4"><label>4. URL chị nhận ban đầu là gì?</label><input type="text" oninput="checkGame(4, this)" placeholder="Xong câu này nữa thôi..."></div>
+                <div class="game-item" id="gi2"><label>2. Tọa độ D...N... liên tưởng đến ngày gì?</label><input type="text" oninput="checkGame(2, this)" placeholder="Đoán xem..."></div>
+                <div class="game-item" id="gi3"><label>3. Mỗi lần gặp mặt, em hay để lại gì khi rời đi?</label><input type="text" oninput="checkGame(3, this)" placeholder="Nhớ lại xem..."></div>
+                <div class="game-item" id="gi4"><label>4. URL chị nhận ban đầu là gì?</label><input type="text" oninput="checkGame(4, this)" placeholder="Nhớ hem..."></div>
             </div>
         </div>
 
@@ -146,7 +146,7 @@
         <div class="page" id="p4">
             <div class="final-card">
                 <p style="font-size:0.9rem; line-height:1.6; color:#444; text-align: justify;">Muốn thì sẽ tìm cách, và đây là cách em làm. Mặc dù không hiện diện nhiều nhưng em muốn giữ lời là em vẫn nhớ đến chị. Hy vọng trải nghiệm này sẽ làm chị vui nhé.</p>
-                <span class="still-here"; style="font-size:2.0rem";>I'M STILL HERE</span>
+                <span class="still-here" style="font-size:2.0rem;">I'M STILL HERE</span>
                 <form action="https://formspree.io/f/mbdazjyk" method="POST">
                     <textarea name="cam_nhan" id="comment" rows="2" style="width:100%; border:1px solid #eee; border-radius:10px; padding:10px; outline:none;" placeholder="Chị có thể viết cảm nhận của mình hay gửi cho em vài lời..." oninput="validate()"></textarea>
                     <button type="submit" class="btn-hb" id="submitBtn">Happy Birthday</button>
@@ -155,10 +155,18 @@
         </div>
     </div>
 
+    <audio id="bgMusic" src="https://files.catbox.moe/vl819s.mp3" loop></audio>
     <audio id="sndTing" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
     <audio id="sndSuccess" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
 
     <script>
+        // Hàm này vừa chuyển trang vừa bật nhạc
+        function startExperience() {
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log("Trình duyệt chặn tự động phát, cần tương tác trước."));
+            go(2);
+        }
+
         function initFl() {
             const r = document.getElementById('rain');
             for (let i = 0; i < 15; i++) {
@@ -244,4 +252,3 @@
     </script>
 </body>
 </html>
-
