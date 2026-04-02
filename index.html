@@ -106,7 +106,7 @@
         <div class="page" id="p2">
             <h1 class="fancy-font" style="font-size: 3.0rem; line-height:3.0;">Giải mã</h1>
             <div style="display: flex; gap: 20px; justify-content: center; z-index: 20; position: relative;">
-                <input type="text" id="codeInp" placeholder="Nhập tọa độ D...N..." style="width: 200px; padding: 10px; border-radius: 12px; border: 1px solid #ddd; font-size: 1.2rem; outline: none;">
+                <input type="text" id="codeInp" placeholder="Nhập tọa độ D...R..." style="width: 200px; padding: 10px; border-radius: 12px; border: 1px solid #ddd; font-size: 1.2rem; outline: none;">
                 <button class="btn-go" onclick="checkPetal()" style="margin: 0; font-size: 1.2rem; padding: 10px 20px;">Mở</button>
             </div>
             <div class="flower-wrap" id="flowerFinal" style="width:180px; height:180px; margin:20px auto; position:relative;">
@@ -127,11 +127,11 @@
                 <div class="cake-slice slice-3" id="cake3">🍓</div>
                 <div class="cake-slice slice-4" id="cake4">🕯️</div>
             </div>
-            <div class="game-grid" style="font-size: 3.0rem">
+            <div class="game-grid" style="font-size: 3.0rem; line-height:1.0;">
                 <div class="game-item" id="gi1"><label>1. Hình nền web & hoa màu gì?</label><input type="text" oninput="checkGame(1, this)" placeholder="Này dễ nè..."></div>
-                <div class="game-item" id="gi2"><label>2. Tọa độ D...N... liên tưởng đến ngày gì?</label><input type="text" oninput="checkGame(2, this)" placeholder="Đoán xem..."></div>
-                <div class="game-item" id="gi3"><label>3. Mỗi lần gặp mặt, em hay để lại gì khi rời đi?</label><input type="text" oninput="checkGame(3, this)" placeholder="Nhớ lại xem..."></div>
-                <div class="game-item" id="gi4"><label>4. URL chị nhận ban đầu là gì?</label><input type="text" oninput="checkGame(4, this)" placeholder="Nhớ hem..."></div>
+                <div class="game-item" id="gi2"><label>2. Tọa độ D...R... liên tưởng đến ngày gì?</label><input type="text" oninput="checkGame(2, this)" placeholder="Đoán xem..."></div>
+                <div class="game-item" id="gi3"><label>3. Mỗi lần gặp mặt, em hay để lại gì và rời đi?</label><input type="text" oninput="checkGame(3, this)" placeholder="Hehe..."></div>
+                <div class="game-item" id="gi4"><label>4. URL chị nhận ban đầu là gì?</label><input type="text" oninput="checkGame(4, this)" placeholder="Áp dụng công thức là ra..."></div>
             </div>
         </div>
 
@@ -196,7 +196,7 @@
             }
         }
 
-        const petalKeys = { "D15N5": "s1", "D9N9": "s2", "D5N15": "s3", "D10N10": "s4", "D7N4": "s5" };
+        const petalKeys = { "D15R5": "s1", "D9R9": "s2", "D5R15": "s3", "D10R10": "s4", "D7R4": "s5" };
         let petalCount = 0;
         function checkPetal() {
             const i = document.getElementById('codeInp');
@@ -221,7 +221,7 @@
             1: ["MAUTIM", "TIM"],
             2: ["SINHNHAT", "SINHNHATCHI", "NGAYSINHNHAT"],
             3: ["THU", "LATHU"],
-            4: ["BITLYHBDVUIVE", "BITLY/HBDVUIVE"]
+            4: ["BITLYHBDVUIVE", "BIT.LY/HBDVUIVE"]
         };
         let solved = [false, false, false, false];
 
